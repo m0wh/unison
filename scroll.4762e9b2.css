@@ -1,0 +1,18 @@
+body {
+  background-color: #111;
+  color: #ddd;
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+body .text {
+  position: absolute;
+  transform: translate3d(calc(50vw - 50%), calc(50vh - 55%), 0);
+  font-family: "Grtsk Variable", Helvetica, sans-serif;
+  margin: 0;
+  font-size: 135vh;
+  line-height: 1em;
+  font-variation-settings: "wdth" 100, "wght" 100, "slnt" 0;
+}
+
+/*# sourceMappingURL=/scroll.4762e9b2.css.map */
