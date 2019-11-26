@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  background-color: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+  color: #9c79ff;
+  font-family: 'Grtsk Variable', Helvetica, sans-serif;
+
+  .freqs {
+    width: 175px;
+    
+    > p {
+      margin: 0;
+      font-size: 2rem;
+      color: #9c79ff55;
+      font-variant-numeric: tabular-nums;
+
+      span {
+        color: #9c79ff;
+      }
+    }
+  }
+
+  .c-overlay {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      right: 0; bottom: 0;
+      background: linear-gradient(transparent 30%, #111 100%);
+    }
+  }
+}
+
+*::selection {
+  background-color: transparent;
+}

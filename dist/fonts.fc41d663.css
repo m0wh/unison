@@ -1,0 +1,33 @@
+
+@font-face {
+  font-family: 'Bandeins Sans Variable';
+  src: url('/BandeinsSansVariableGX.b9587b1c.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Bandeins Strange Variable';
+  src: url('/BandeinsStrangeVariableGX.fb6d4e69.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Spezia Mono';
+  src: url('/Spezia_Web_Monospace_Complete_Trial.99cac8ee.woff') format('woff-variations'), url('/Spezia_Web_Monospace_Complete_Trial.a5b4e841.woff2') format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'Spezia Mono';
+  src: url('/Spezia_Web_Monospace_Complete_Trial.99cac8ee.woff') format('woff-variations'), url('/Spezia_Web_Monospace_Complete_Trial.a5b4e841.woff2') format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'Grtsk Roman Variable';
+  src: url('/TRY_Grtsk_Roman_Variable.653698cd.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Grtsk Variable';
+  src: url('/TRY_Grtsk_Variable.17895819.ttf') format('truetype');
+}
+
+
+/*# sourceMappingURL=/fonts.fc41d663.css.map */
