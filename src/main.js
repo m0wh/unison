@@ -13,44 +13,46 @@ class Synth {
     this.fftCtx = this.fftCanvas.getContext('2d')
     this.fft = new Tone.FFT(2048).toMaster()
 
-    this.lp = new Tone.Filter({
-      type : 'lowpass',
-      frequency : 110,
-      rolloff : -12,
-      Q : 6
-    })
-
-    this.hp = new Tone.Filter({
-      type : 'highpass',
-      frequency : 400,
-      rolloff : -12,
-      Q : 6
-    }).toMaster()
-
     this.reverb = new Tone.Reverb(10)
 
     this.aPan = new Tone.Panner(-1)
     this.bPan = new Tone.Panner(1)
 
     this.a = new Tone.MonoSynth({
-      oscillator: { type: 'sawtooth' },
+      oscillator: { type: 'sine' },
       envelope: { attack: 0.5, release: 1 }
-    }).chain(this.lp, this.hp, this.wf, this.fft, this.aPan, this.reverb, Tone.Master)
+    })
+    this.a.connect(this.aPan)
+    this.a.chain(this.wf, this.fft, this.reverb, this.aPan, Tone.Master)
 
     this.b = new Tone.MonoSynth({
-      oscillator: { type: 'triangle' },
+      oscillator: { type: 'sine' },
       envelope: { attack: 0.5, release: 1 }
-    }).chain(this.lp, this.hp, this.wf, this.fft, this.bPan, this.reverb, Tone.Master)  
+    })
+    this.b.connect(this.bPan)
+    this.b.chain(this.wf, this.fft, this.reverb, this.bPan, Tone.Master)
+
+    this.c = new Tone.MonoSynth({
+      oscillator: { type: 'sine' },
+      envelope: { attack: 0.5, release: 1 }
+    })
+    this.c.chain(this.wf, this.fft, this.reverb, Tone.Master)
+
+    this.playing = false
   }
 
   init () {
     window.addEventListener('mousedown', e => {
-      this.a.triggerAttack(50 + 150 * e.clientY / window.innerHeight)
-      this.b.triggerAttack(50 + 10 * e.clientY / window.innerHeight + 200 * e.clientX / window.innerWidth)
-    })
-    window.addEventListener('touchstart', e => {
-      this.a.triggerAttack(50 + 150 * e.clientY / window.innerHeight)
-      this.b.triggerAttack(50 + 10 * e.clientY / window.innerHeight + 200 * e.clientX / window.innerWidth)
+      this.playing = !this.playing
+      if (this.playing) {
+        this.a.triggerAttack(50 + 150 * e.clientY / window.innerHeight)
+        this.b.triggerAttack(50 + 10 * e.clientY / window.innerHeight + 200 * e.clientX / window.innerWidth)
+        this.c.triggerAttack(200)
+      } else {
+        this.a.triggerRelease()
+        this.b.triggerRelease()
+        this.c.triggerRelease()
+      }
     })
 
     window.addEventListener('mousemove', e => {
@@ -61,22 +63,11 @@ class Synth {
       this.txt.querySelector('.a').style.fontVariationSettings = `'wdth' ${map(this.a.frequency.value, 50, 260, 0, 1000)}`
       this.txt.querySelector('.b').style.fontVariationSettings = `'wdth' ${map(this.b.frequency.value, 50, 260, 0, 1000)}`
     })
-    window.addEventListener('touchmove', e => {
-      this.a.frequency.value = 50 + 150 * e.clientY / window.innerHeight
-      this.b.frequency.value = 50 + 10 * e.clientY / window.innerHeight + 200 * e.clientX / window.innerWidth
-      this.txt.querySelector('.a').textContent = Math.round(this.a.frequency.value)
-      this.txt.querySelector('.b').textContent = Math.round(this.b.frequency.value)
-      this.txt.querySelector('.a').style.fontVariationSettings = `'wdth' ${map(this.a.frequency.value, 50, 260, 0, 1000)}`
-      this.txt.querySelector('.b').style.fontVariationSettings = `'wdth' ${map(this.b.frequency.value, 50, 260, 0, 1000)}`
-    })
 
-    window.addEventListener('mouseup', () => {
-      this.a.triggerRelease()
-      this.b.triggerRelease()
-    })
-    window.addEventListener('touchend', () => {
-      this.a.triggerRelease()
-      this.b.triggerRelease()
+    window.addEventListener('wheel', e => {
+      this.c.frequency.value += e.deltaY
+      this.txt.querySelector('.c').textContent = Math.round(this.c.frequency.value)
+      this.txt.querySelector('.c').style.fontVariationSettings = `'wdth' ${map(this.c.frequency.value, 50, 260, 0, 1000)}`
     })
 
     requestAnimationFrame(this.update.bind(this))

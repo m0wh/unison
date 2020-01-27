@@ -175,39 +175,42 @@ function () {
     this.fftCanvas = fft instanceof HTMLElement ? fft : document.querySelector(fft);
     this.fftCtx = this.fftCanvas.getContext('2d');
     this.fft = new _tone.default.FFT(2048).toMaster();
-    this.lp = new _tone.default.Filter({
-      type: 'lowpass',
-      frequency: 110,
-      rolloff: -12,
-      Q: 6
-    });
-    this.hp = new _tone.default.Filter({
-      type: 'highpass',
-      frequency: 400,
-      rolloff: -12,
-      Q: 6
-    }).toMaster();
     this.reverb = new _tone.default.Reverb(10);
     this.aPan = new _tone.default.Panner(-1);
     this.bPan = new _tone.default.Panner(1);
     this.a = new _tone.default.MonoSynth({
       oscillator: {
-        type: 'sawtooth'
+        type: 'sine'
       },
       envelope: {
         attack: 0.5,
         release: 1
       }
-    }).chain(this.lp, this.hp, this.wf, this.fft, this.aPan, this.reverb, _tone.default.Master);
+    });
+    this.a.connect(this.aPan);
+    this.a.chain(this.wf, this.fft, this.reverb, this.aPan, _tone.default.Master);
     this.b = new _tone.default.MonoSynth({
       oscillator: {
-        type: 'triangle'
+        type: 'sine'
       },
       envelope: {
         attack: 0.5,
         release: 1
       }
-    }).chain(this.lp, this.hp, this.wf, this.fft, this.bPan, this.reverb, _tone.default.Master);
+    });
+    this.b.connect(this.bPan);
+    this.b.chain(this.wf, this.fft, this.reverb, this.bPan, _tone.default.Master);
+    this.c = new _tone.default.MonoSynth({
+      oscillator: {
+        type: 'sine'
+      },
+      envelope: {
+        attack: 0.5,
+        release: 1
+      }
+    });
+    this.c.chain(this.wf, this.fft, this.reverb, _tone.default.Master);
+    this.playing = false;
   }
 
   _createClass(Synth, [{
@@ -216,14 +219,21 @@ function () {
       var _this = this;
 
       window.addEventListener('mousedown', function (e) {
-        _this.a.triggerAttack(50 + 150 * e.clientY / window.innerHeight);
+        _this.playing = !_this.playing;
 
-        _this.b.triggerAttack(50 + 10 * e.clientY / window.innerHeight + 200 * e.clientX / window.innerWidth);
-      });
-      window.addEventListener('touchstart', function (e) {
-        _this.a.triggerAttack(50 + 150 * e.clientY / window.innerHeight);
+        if (_this.playing) {
+          _this.a.triggerAttack(50 + 150 * e.clientY / window.innerHeight);
 
-        _this.b.triggerAttack(50 + 10 * e.clientY / window.innerHeight + 200 * e.clientX / window.innerWidth);
+          _this.b.triggerAttack(50 + 10 * e.clientY / window.innerHeight + 200 * e.clientX / window.innerWidth);
+
+          _this.c.triggerAttack(200);
+        } else {
+          _this.a.triggerRelease();
+
+          _this.b.triggerRelease();
+
+          _this.c.triggerRelease();
+        }
       });
       window.addEventListener('mousemove', function (e) {
         _this.a.frequency.value = 50 + 150 * e.clientY / window.innerHeight;
@@ -233,23 +243,10 @@ function () {
         _this.txt.querySelector('.a').style.fontVariationSettings = "'wdth' ".concat((0, _utils.map)(_this.a.frequency.value, 50, 260, 0, 1000));
         _this.txt.querySelector('.b').style.fontVariationSettings = "'wdth' ".concat((0, _utils.map)(_this.b.frequency.value, 50, 260, 0, 1000));
       });
-      window.addEventListener('touchmove', function (e) {
-        _this.a.frequency.value = 50 + 150 * e.clientY / window.innerHeight;
-        _this.b.frequency.value = 50 + 10 * e.clientY / window.innerHeight + 200 * e.clientX / window.innerWidth;
-        _this.txt.querySelector('.a').textContent = Math.round(_this.a.frequency.value);
-        _this.txt.querySelector('.b').textContent = Math.round(_this.b.frequency.value);
-        _this.txt.querySelector('.a').style.fontVariationSettings = "'wdth' ".concat((0, _utils.map)(_this.a.frequency.value, 50, 260, 0, 1000));
-        _this.txt.querySelector('.b').style.fontVariationSettings = "'wdth' ".concat((0, _utils.map)(_this.b.frequency.value, 50, 260, 0, 1000));
-      });
-      window.addEventListener('mouseup', function () {
-        _this.a.triggerRelease();
-
-        _this.b.triggerRelease();
-      });
-      window.addEventListener('touchend', function () {
-        _this.a.triggerRelease();
-
-        _this.b.triggerRelease();
+      window.addEventListener('wheel', function (e) {
+        _this.c.frequency.value += e.deltaY;
+        _this.txt.querySelector('.c').textContent = Math.round(_this.c.frequency.value);
+        _this.txt.querySelector('.c').style.fontVariationSettings = "'wdth' ".concat((0, _utils.map)(_this.c.frequency.value, 50, 260, 0, 1000));
       });
       requestAnimationFrame(this.update.bind(this));
     }
@@ -325,7 +322,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50455" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63418" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -189,7 +189,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./BandeinsSansVariableGX.ttf":[["BandeinsSansVariableGX.92893733.ttf","src/assets/fonts/BandeinsSansVariableGX.ttf"],"src/assets/fonts/BandeinsSansVariableGX.ttf"],"./BandeinsStrangeVariableGX.ttf":[["BandeinsStrangeVariableGX.1e9d9e84.ttf","src/assets/fonts/BandeinsStrangeVariableGX.ttf"],"src/assets/fonts/BandeinsStrangeVariableGX.ttf"],"./Spezia_Web_Monospace_Complete_Trial.woff":[["Spezia_Web_Monospace_Complete_Trial.63e8b5d3.woff","src/assets/fonts/Spezia_Web_Monospace_Complete_Trial.woff"],"src/assets/fonts/Spezia_Web_Monospace_Complete_Trial.woff"],"./Spezia_Web_Monospace_Complete_Trial.woff2":[["Spezia_Web_Monospace_Complete_Trial.f1b7d534.woff2","src/assets/fonts/Spezia_Web_Monospace_Complete_Trial.woff2"],"src/assets/fonts/Spezia_Web_Monospace_Complete_Trial.woff2"],"./TRY_Grtsk_Roman_Variable.ttf":[["TRY_Grtsk_Roman_Variable.1f3bb4cb.ttf","src/assets/fonts/TRY_Grtsk_Roman_Variable.ttf"],"src/assets/fonts/TRY_Grtsk_Roman_Variable.ttf"],"./TRY_Grtsk_Variable.ttf":[["TRY_Grtsk_Variable.81f98131.ttf","src/assets/fonts/TRY_Grtsk_Variable.ttf"],"src/assets/fonts/TRY_Grtsk_Variable.ttf"],"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./TRY_Grtsk_Roman_Variable.ttf":[["TRY_Grtsk_Roman_Variable.1f3bb4cb.ttf","src/assets/fonts/TRY_Grtsk_Roman_Variable.ttf"],"src/assets/fonts/TRY_Grtsk_Roman_Variable.ttf"],"./TRY_Grtsk_Variable.ttf":[["TRY_Grtsk_Variable.81f98131.ttf","src/assets/fonts/TRY_Grtsk_Variable.ttf"],"src/assets/fonts/TRY_Grtsk_Variable.ttf"],"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -217,7 +217,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50455" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63418" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
