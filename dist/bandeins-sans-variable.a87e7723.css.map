@@ -1,1 +1,0 @@
-{"version":3,"sources":["bandeins-sans-variable.css"],"names":[],"mappings":";AACA;EACE,qCAAqC;EACrC,oEAA2D;AAC7D","file":"bandeins-sans-variable.a87e7723.css","sourceRoot":"..","sourcesContent":["\n@font-face {\n  font-family: 'Bandeins Sans Variable';\n  src: url('./BandeinsSansVariableGX.ttf') format('truetype');\n}"]}
